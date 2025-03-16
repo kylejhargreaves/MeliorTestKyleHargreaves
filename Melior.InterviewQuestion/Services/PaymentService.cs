@@ -4,8 +4,10 @@ using System.Configuration;
 
 namespace Melior.InterviewQuestion.Services
 {
-    public class PaymentService : IPaymentService
+    public abstract class PaymentService : IPaymentService
     {
+
+        public abstract PaymentScheme PaymentScheme { get; } // the abstract property, define for each payment class
         public MakePaymentResult MakePayment(MakePaymentRequest request)
         {
             var dataStoreType = ConfigurationManager.AppSettings["DataStoreType"];
@@ -23,6 +25,8 @@ namespace Melior.InterviewQuestion.Services
                 account = accountDataStore.GetAccount(request.DebtorAccountNumber);
             }
 
+            // move this out to the derived classes later
+
             var result = new MakePaymentResult();
 
             switch (request.PaymentScheme)
@@ -32,7 +36,7 @@ namespace Melior.InterviewQuestion.Services
                     {
                         result.Success = false;
                     }
-                    else if (!account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.Bacs))
+                    else if (!account.AllowedPaymentSchemes.HasFlag(PaymentScheme))
                     {
                         result.Success = false;
                     }
