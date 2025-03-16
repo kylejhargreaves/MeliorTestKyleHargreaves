@@ -1,13 +1,20 @@
 ﻿using Melior.InterviewQuestion.Data;
+using Melior.InterviewQuestion.Services.Validation;
 using Melior.InterviewQuestion.Types;
 using System.Configuration;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Melior.InterviewQuestion.Services
 {
     public abstract class PaymentService : IPaymentService
     {
-
+        private IPaymentValidator PaymentValidator { get; }
         public abstract PaymentScheme PaymentScheme { get; } // the abstract property, define for each payment class
+
+        public PaymentService(IPaymentValidator paymentValidator)
+        {
+            PaymentValidator = paymentValidator;
+        }
         public MakePaymentResult MakePayment(MakePaymentRequest request)
         {
             var dataStoreType = ConfigurationManager.AppSettings["DataStoreType"];
@@ -24,6 +31,9 @@ namespace Melior.InterviewQuestion.Services
                 var accountDataStore = new AccountDataStore();
                 account = accountDataStore.GetAccount(request.DebtorAccountNumber);
             }
+
+            //if (!PaymentValidator.ValidatePayment(request, PaymentScheme, debitAccount, creditAccount)) return new MakePaymentResult(false);
+
 
             // move this out to the derived classes later
 
