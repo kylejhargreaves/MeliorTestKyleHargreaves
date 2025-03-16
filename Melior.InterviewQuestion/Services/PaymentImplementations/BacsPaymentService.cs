@@ -4,10 +4,10 @@ using Melior.InterviewQuestion.Types;
 
 namespace Melior.InterviewQuestion.Services.PaymentImplementations
 {
-    internal class BacsPaymentService : PaymentService
+    public sealed class BacsPaymentService : PaymentService
     {
-        public override AllowedPaymentSchemes PaymentScheme => AllowedPaymentSchemes.Bacs;
-
+        public override AllowedPaymentSchemes AllowedPaymentSchemes => AllowedPaymentSchemes.Bacs;
+        public override PaymentScheme PaymentScheme => PaymentScheme.Bacs;
         public BacsPaymentService(IAccountStoreFactory accountStoreFactory, IPaymentValidator paymentValidator, IAccountValidator accountValidator)
         : base(accountStoreFactory, paymentValidator, accountValidator)
         {

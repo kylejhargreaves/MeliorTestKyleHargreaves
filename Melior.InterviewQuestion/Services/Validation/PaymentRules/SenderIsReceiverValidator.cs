@@ -2,7 +2,7 @@
 
 namespace Melior.InterviewQuestion.Services.Validation.PaymentRules
 {
-    internal class SenderIsReceiverValidator : IPaymentValidationRule
+    public sealed class SenderIsReceiverValidator : IPaymentValidationRule
     {
         public bool IsValid(MakePaymentRequest request)
         {

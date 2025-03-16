@@ -2,7 +2,7 @@
 
 namespace Melior.InterviewQuestion.Data
 {
-    public class AccountDataStore : IAccountDataStore
+    public sealed class AccountDataStore : IAccountDataStore
     {
         public Account GetAccount(string accountNumber) 
         {

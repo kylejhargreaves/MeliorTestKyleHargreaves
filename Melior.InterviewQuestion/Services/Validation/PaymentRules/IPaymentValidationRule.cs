@@ -2,7 +2,7 @@
 
 namespace Melior.InterviewQuestion.Services.Validation.PaymentRules
 {
-    internal interface IPaymentValidationRule
+    public interface IPaymentValidationRule
     {
         bool IsValid(MakePaymentRequest request);
     }

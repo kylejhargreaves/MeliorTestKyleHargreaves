@@ -2,7 +2,7 @@
 
 namespace Melior.InterviewQuestion.Services.Validation.AccountRules
 {
-    public class AccountStatusValidator : IAccountValidationRule
+    public sealed class AccountStatusValidator : IAccountValidationRule
     {
         public bool IsValid(Account account)
         {

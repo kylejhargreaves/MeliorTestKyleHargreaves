@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Melior.InterviewQuestion.Services.Validation
 {
-    internal class AccountValidator : IAccountValidator
+    public sealed class AccountValidator : IAccountValidator
     {
         private readonly List<IAccountValidationRule> _accountRules;
         private readonly List<IAccountSchemeValidationRule> _accountSchemeValidationRules;

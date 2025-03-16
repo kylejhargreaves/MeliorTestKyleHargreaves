@@ -2,7 +2,7 @@
 
 namespace Melior.InterviewQuestion.Services.Validation.AccountRules
 {
-    internal interface IAccountSchemeValidationRule
+    public interface IAccountSchemeValidationRule
     {
         public bool IsValid(Account account, AllowedPaymentSchemes paymentScheme);
     }

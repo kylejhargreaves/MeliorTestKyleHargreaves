@@ -4,9 +4,10 @@ using Melior.InterviewQuestion.Types;
 
 namespace Melior.InterviewQuestion.Services.PaymentImplementations
 {
-    internal class ChapsPaymentService : PaymentService
+    public sealed class ChapsPaymentService : PaymentService
     {
-        public override AllowedPaymentSchemes PaymentScheme => AllowedPaymentSchemes.Chaps;
+        public override AllowedPaymentSchemes AllowedPaymentSchemes => AllowedPaymentSchemes.Chaps;
+        public override PaymentScheme PaymentScheme => PaymentScheme.Chaps;
         public ChapsPaymentService(IAccountStoreFactory accountStoreFactory, IPaymentValidator paymentValidator, IAccountValidator accountValidator)
         : base(accountStoreFactory, paymentValidator, accountValidator)
         {

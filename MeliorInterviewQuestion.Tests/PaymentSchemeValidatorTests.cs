@@ -4,12 +4,12 @@ using Melior.InterviewQuestion.Types;
 
 namespace Melior.InterviewQuestion.Tests
 {
-    [TestClass] // Marks this as a test class
+    [TestClass]
     public class PaymentSchemeValidatorTests
     {
         private PaymentSchemeValidator _validator;
 
-        [TestInitialize] // Runs before each test
+        [TestInitialize]
         public void Setup()
         {
             _validator = new PaymentSchemeValidator();
@@ -20,7 +20,7 @@ namespace Melior.InterviewQuestion.Tests
         {
             // Arrange
             var request = new MakePaymentRequest { PaymentScheme = PaymentScheme.Bacs };
-            var allowedSchemes = AllowedPaymentSchemes.Bacs | AllowedPaymentSchemes.Chaps;
+            var allowedSchemes = PaymentScheme.Bacs;
 
             // Act
             bool result = _validator.IsValid(request, allowedSchemes);
@@ -34,7 +34,7 @@ namespace Melior.InterviewQuestion.Tests
         {
             // Arrange
             var request = new MakePaymentRequest { PaymentScheme = PaymentScheme.FasterPayments };
-            var allowedSchemes = AllowedPaymentSchemes.Bacs | AllowedPaymentSchemes.Chaps;
+            var allowedSchemes = PaymentScheme.Bacs;
 
             // Act
             bool result = _validator.IsValid(request, allowedSchemes);
@@ -48,8 +48,8 @@ namespace Melior.InterviewQuestion.Tests
         {
             // Arrange
             var request = new MakePaymentRequest { PaymentScheme = PaymentScheme.Bacs };
-            var allowedSchemes = (AllowedPaymentSchemes)0; // No schemes allowed
-
+            var allowedSchemes = (PaymentScheme)0; // No schemes allowed
+            
             // Act
             bool result = _validator.IsValid(request, allowedSchemes);
 

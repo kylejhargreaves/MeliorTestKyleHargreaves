@@ -2,11 +2,11 @@
 
 namespace Melior.InterviewQuestion.Services.Validation.PaymentRules
 {
-    public class PaymentSchemeValidator : IPaymentSchemeValidationRule
+    public sealed class PaymentSchemeValidator : IPaymentSchemeValidationRule
     {
-        public bool IsValid(MakePaymentRequest request, AllowedPaymentSchemes paymentScheme)
+        public bool IsValid(MakePaymentRequest request, PaymentScheme paymentScheme)
         {
-            if (paymentScheme.HasFlag(request.PaymentScheme)) return true;
+            if (paymentScheme == request.PaymentScheme) return true;
             return false;
         }
     }

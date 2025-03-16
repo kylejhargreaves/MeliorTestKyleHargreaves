@@ -3,17 +3,20 @@ using System;
 
 namespace Melior.InterviewQuestion.Services.Validation.PaymentRules
 {
-    internal class PaymentWindowValidator : IPaymentValidationRule
+    public sealed class PaymentWindowValidator : IPaymentDateValidationRule
     {
         private double PaymentWindowDays { get; }
-        public bool IsValid(MakePaymentRequest request)
+        public PaymentWindowValidator(double paymentWindowDays = 30)// just default this to 30 days
         {
-            if (request.PaymentDate < DateTime.UtcNow.AddDays(-PaymentWindowDays)
-               || request.PaymentDate > DateTime.UtcNow.AddDays(PaymentWindowDays))
-            {
-                return true;
-            }
-            return false;
+            PaymentWindowDays = paymentWindowDays;
+        }
+        public bool IsValid(MakePaymentRequest request, DateTime currentTime)
+        {
+            DateTime today = currentTime.Date;
+            DateTime lowerBoundary = today.AddDays(-PaymentWindowDays);
+            DateTime upperBoundary = today.AddDays(PaymentWindowDays);
+
+            return request.PaymentDate.Date >= lowerBoundary && request.PaymentDate.Date <= upperBoundary;
         }
     }
 }

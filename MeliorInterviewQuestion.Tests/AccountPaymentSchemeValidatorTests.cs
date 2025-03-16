@@ -4,7 +4,7 @@ using Melior.InterviewQuestion.Types;
 
 namespace Melior.InterviewQuestion.Tests
 {
-    [TestClass] // Marks this as a test class for MSTest
+    [TestClass] 
     public class AccountPaymentSchemeValidatorTests
     {
         private AccountPaymentSchemeValidator _validator;

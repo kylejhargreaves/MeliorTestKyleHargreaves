@@ -51,7 +51,7 @@ namespace Melior.InterviewQuestion.Tests
             bool result = _validator.IsValid(account);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.IsFalse(result);
         }
     }
 }

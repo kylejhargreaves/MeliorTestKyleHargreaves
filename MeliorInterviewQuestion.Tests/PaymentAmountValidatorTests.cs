@@ -4,12 +4,12 @@ using Melior.InterviewQuestion.Types;
 
 namespace Melior.InterviewQuestion.Tests
 {
-    [TestClass] // Marks this as a test class
+    [TestClass]
     public class PaymentAmountValidatorTests
     {
         private PaymentAmountValidator _validator;
 
-        [TestInitialize] // Runs before each test
+        [TestInitialize]
         public void Setup()
         {
             _validator = new PaymentAmountValidator();

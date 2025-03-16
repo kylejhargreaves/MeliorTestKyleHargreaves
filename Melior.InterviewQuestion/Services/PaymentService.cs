@@ -9,11 +9,12 @@ namespace Melior.InterviewQuestion.Services
     /// </summary>
     public abstract class PaymentService : IPaymentService
     {
-        protected IAccountDataStore Store { get; }
+        private IAccountDataStore Store { get; }
         private IAccountValidator AccountValidator { get; }
         private IPaymentValidator PaymentValidator { get; }
 
-        public abstract AllowedPaymentSchemes PaymentScheme { get; } // the abstract property, define for each payment class
+        public abstract AllowedPaymentSchemes AllowedPaymentSchemes { get; } // the abstract property, define for each payment class
+        public abstract PaymentScheme PaymentScheme { get; } // the abstract property, define for each payment class
 
         public PaymentService(IAccountStoreFactory accountStoreFactory, IPaymentValidator paymentValidator, IAccountValidator accountValidator)
         {
@@ -24,9 +25,10 @@ namespace Melior.InterviewQuestion.Services
         public MakePaymentResult MakePayment(MakePaymentRequest request)
         {
             var debitAccount = Store.GetAccount(request.DebtorAccountNumber);
-            var creditAccount = Store.GetAccount(request.DebtorAccountNumber);
+            var creditAccount = Store.GetAccount(request.CreditorAccountNumber);
 
-            if (!AccountValidator.ValidateAccount(debitAccount, PaymentScheme)) return new MakePaymentResult(false);
+            if (!AccountValidator.ValidateAccount(debitAccount, AllowedPaymentSchemes)) return new MakePaymentResult(false);
+            if (!AccountValidator.ValidateAccount(creditAccount, AllowedPaymentSchemes)) return new MakePaymentResult(false);
             if (!PaymentValidator.ValidatePayment(request, PaymentScheme)) return new MakePaymentResult(false);
 
             // move this out to the derived classes later

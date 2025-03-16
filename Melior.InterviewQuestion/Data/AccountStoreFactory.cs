@@ -2,7 +2,7 @@
 
 namespace Melior.InterviewQuestion.Data
 {
-    public class AccountStoreFactory : IAccountStoreFactory
+    public sealed class AccountStoreFactory : IAccountStoreFactory
     {
 
         public IAccountDataStore GetAccountStore()

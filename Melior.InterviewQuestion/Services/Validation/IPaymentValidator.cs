@@ -4,6 +4,6 @@ namespace Melior.InterviewQuestion.Services.Validation
 {
     public interface IPaymentValidator
     {
-        public bool ValidatePayment(MakePaymentRequest request, AllowedPaymentSchemes paymentScheme);
+        public bool ValidatePayment(MakePaymentRequest request, PaymentScheme paymentScheme);
     }
 }

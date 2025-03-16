@@ -5,18 +5,18 @@ using Melior.InterviewQuestion.Types;
 namespace Melior.InterviewQuestion.Tests
 {
     [TestClass]
-    public class PaymentAccountValidatorTests
+    public class SenderIsReceiverValidatorTests
     {
-        private PaymentAccountValidator _validator;
+        private SenderIsReceiverValidator _validator;
 
-        [TestInitialize]
+        [TestInitialize] 
         public void Setup()
         {
-            _validator = new PaymentAccountValidator();
+            _validator = new SenderIsReceiverValidator();
         }
 
         [TestMethod]
-        public void IsValid_WhenBothDebtorAndCreditorAccountNumbersArePresent_ShouldReturnTrue()
+        public void IsValid_WhenSenderAndReceiverAreDifferent_ShouldReturnTrue()
         {
             // Arrange
             var request = new MakePaymentRequest
@@ -33,7 +33,24 @@ namespace Melior.InterviewQuestion.Tests
         }
 
         [TestMethod]
-        public void IsValid_WhenDebtorAccountNumberIsEmpty_ShouldReturnFalse()
+        public void IsValid_WhenSenderAndReceiverAreTheSame_ShouldReturnFalse()
+        {
+            // Arrange
+            var request = new MakePaymentRequest
+            {
+                DebtorAccountNumber = "123456",
+                CreditorAccountNumber = "123456" // Same as DebtorAccountNumber
+            };
+
+            // Act
+            bool result = _validator.IsValid(request);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void IsValid_WhenDebtorAccountNumberIsEmptyAndDifferent_ShouldReturnTrue()
         {
             // Arrange
             var request = new MakePaymentRequest
@@ -46,11 +63,11 @@ namespace Melior.InterviewQuestion.Tests
             bool result = _validator.IsValid(request);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
-        public void IsValid_WhenCreditorAccountNumberIsEmpty_ShouldReturnFalse()
+        public void IsValid_WhenCreditorAccountNumberIsEmptyAndDifferent_ShouldReturnTrue()
         {
             // Arrange
             var request = new MakePaymentRequest
@@ -63,11 +80,11 @@ namespace Melior.InterviewQuestion.Tests
             bool result = _validator.IsValid(request);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
-        public void IsValid_WhenBothAccountNumbersAreEmpty_ShouldReturnFalse()
+        public void IsValid_WhenBothDebtorAndCreditorAccountNumbersAreEmpty_ShouldReturnFalse()
         {
             // Arrange
             var request = new MakePaymentRequest
@@ -84,7 +101,7 @@ namespace Melior.InterviewQuestion.Tests
         }
 
         [TestMethod]
-        public void IsValid_WhenDebtorAccountNumberIsNull_ShouldReturnFalse()
+        public void IsValid_WhenDebtorAccountNumberIsNullAndDifferent_ShouldReturnTrue()
         {
             // Arrange
             var request = new MakePaymentRequest
@@ -97,16 +114,33 @@ namespace Melior.InterviewQuestion.Tests
             bool result = _validator.IsValid(request);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
-        public void IsValid_WhenCreditorAccountNumberIsNull_ShouldReturnFalse()
+        public void IsValid_WhenCreditorAccountNumberIsNullAndDifferent_ShouldReturnTrue()
         {
             // Arrange
             var request = new MakePaymentRequest
             {
                 DebtorAccountNumber = "123456",
+                CreditorAccountNumber = null
+            };
+
+            // Act
+            bool result = _validator.IsValid(request);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsValid_WhenBothDebtorAndCreditorAccountNumbersAreNull_ShouldReturnFalse()
+        {
+            // Arrange
+            var request = new MakePaymentRequest
+            {
+                DebtorAccountNumber = null,
                 CreditorAccountNumber = null
             };
 
