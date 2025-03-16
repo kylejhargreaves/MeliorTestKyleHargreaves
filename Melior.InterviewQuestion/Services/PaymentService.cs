@@ -2,6 +2,7 @@
 using Melior.InterviewQuestion.Services.Validation;
 using Melior.InterviewQuestion.Types;
 using System.Configuration;
+using System.Security.Principal;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace Melior.InterviewQuestion.Services
@@ -13,7 +14,7 @@ namespace Melior.InterviewQuestion.Services
     {
         protected IAccountDataStore Store { get; }
         private IPaymentValidator PaymentValidator { get; }
-        public abstract PaymentScheme PaymentScheme { get; } // the abstract property, define for each payment class
+        public abstract AllowedPaymentSchemes PaymentScheme { get; } // the abstract property, define for each payment class
 
         public PaymentService(IAccountStoreFactory accountStoreFactory, IPaymentValidator paymentValidator)
         {
@@ -31,7 +32,7 @@ namespace Melior.InterviewQuestion.Services
             // move this out to the derived classes later
             debitAccount.DebitAccount(request.Amount);
             creditAccount.CreditAccount(request.Amount);
-
+            
 
             Store.UpdateAccount(debitAccount);
             Store.UpdateAccount(creditAccount);

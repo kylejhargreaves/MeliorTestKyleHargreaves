@@ -11,7 +11,7 @@ namespace Melior.InterviewQuestion.Services.PaymentImplementations
 {
     internal class FasterPaymentsService : PaymentService
     {
-        public override PaymentScheme PaymentScheme => PaymentScheme.FasterPayments;
+        public override AllowedPaymentSchemes PaymentScheme => AllowedPaymentSchemes.FasterPayments;
         public FasterPaymentsService(IAccountStoreFactory accountStoreFactory, IPaymentValidator paymentValidator)
         : base(accountStoreFactory, paymentValidator)
         {

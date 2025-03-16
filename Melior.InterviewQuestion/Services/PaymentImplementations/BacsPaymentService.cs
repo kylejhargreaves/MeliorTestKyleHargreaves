@@ -11,7 +11,7 @@ namespace Melior.InterviewQuestion.Services.PaymentImplementations
 {
     internal class BacsPaymentService : PaymentService
     {
-        public override PaymentScheme PaymentScheme => PaymentScheme.Bacs;
+        public override AllowedPaymentSchemes PaymentScheme => AllowedPaymentSchemes.Bacs;
 
         public BacsPaymentService(IAccountStoreFactory accountStoreFactory, IPaymentValidator paymentValidator)
         : base(accountStoreFactory, paymentValidator)

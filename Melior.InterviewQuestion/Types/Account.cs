@@ -63,7 +63,7 @@ namespace Melior.InterviewQuestion.Types
             {
                 return false; // No schemes have been allowed
             }
-
+          
             if (!AllowedPaymentSchemes.HasFlag(paymentScheme))
             {
                 return false; // The requested payment scheme isn't available

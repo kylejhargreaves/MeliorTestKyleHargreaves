@@ -10,9 +10,9 @@ namespace Melior.InterviewQuestion.Services.Validation
     internal class PaymentValidator : IPaymentValidator
     {
         private double PaymentWindowDays { get; }
-        public bool ValidatePayment(MakePaymentRequest request, PaymentScheme paymentScheme, IAccount debitAccount, IAccount creditAccount)
+        public bool ValidatePayment(MakePaymentRequest request, AllowedPaymentSchemes paymentScheme, IAccount debitAccount, IAccount creditAccount)
         {
-            if (request.PaymentScheme != paymentScheme) return false;
+            if (!paymentScheme.HasFlag(request.PaymentScheme)) return false;
             if(request.Amount <= 0) return false;
             if (string.IsNullOrWhiteSpace(request.DebtorAccountNumber)) return false;
             if (string.IsNullOrWhiteSpace(request.CreditorAccountNumber)) return false;
