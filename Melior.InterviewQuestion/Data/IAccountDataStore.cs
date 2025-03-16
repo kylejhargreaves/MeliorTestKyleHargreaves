@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Melior.InterviewQuestion.Data
 {
-    internal interface IAccountDataStore
+    public interface IAccountDataStore
     {
         public Account GetAccount(string accountNumber);
         public void UpdateAccount(Account account);

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Melior.InterviewQuestion.Services.Validation
 {
-    internal class PaymentValidator
+    internal class PaymentValidator : IPaymentValidator
     {
         private double PaymentWindowDays { get; }
         public bool ValidatePayment(MakePaymentRequest request, PaymentScheme paymentScheme, IAccount debitAccount, IAccount creditAccount)
