@@ -6,7 +6,7 @@
         {
             Success = success;
         }
-        public MakePaymentResult() { };
+        public MakePaymentResult() { }
         public bool Success { get; set; }
     }
 }
