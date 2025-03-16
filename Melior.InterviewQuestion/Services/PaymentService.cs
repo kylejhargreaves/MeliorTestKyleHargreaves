@@ -7,7 +7,7 @@ using static System.Formats.Asn1.AsnWriter;
 namespace Melior.InterviewQuestion.Services
 {
     /// <summary>
-    /// The abstract class that provides most of the functionality, derived classes need to have the Payment scheme defined i.e. a concrete implementation
+    /// The abstract payment class that provides most of the functionality, derived classes need to have the Payment scheme defined i.e. a concrete implementation
     /// </summary>
     public abstract class PaymentService : IPaymentService
     {
