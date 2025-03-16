@@ -1,9 +1,6 @@
 ﻿using Melior.InterviewQuestion.Data;
 using Melior.InterviewQuestion.Services.Validation;
 using Melior.InterviewQuestion.Types;
-using System.Configuration;
-using System.Security.Principal;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Melior.InterviewQuestion.Services
 {
@@ -13,21 +10,24 @@ namespace Melior.InterviewQuestion.Services
     public abstract class PaymentService : IPaymentService
     {
         protected IAccountDataStore Store { get; }
+        private IAccountValidator AccountValidator { get; }
         private IPaymentValidator PaymentValidator { get; }
+
         public abstract AllowedPaymentSchemes PaymentScheme { get; } // the abstract property, define for each payment class
 
-        public PaymentService(IAccountStoreFactory accountStoreFactory, IPaymentValidator paymentValidator)
+        public PaymentService(IAccountStoreFactory accountStoreFactory, IPaymentValidator paymentValidator, IAccountValidator accountValidator)
         {
             Store = accountStoreFactory.GetAccountStore();
             PaymentValidator = paymentValidator;
+            AccountValidator = accountValidator;
         }
         public MakePaymentResult MakePayment(MakePaymentRequest request)
         {
             var debitAccount = Store.GetAccount(request.DebtorAccountNumber);
             var creditAccount = Store.GetAccount(request.DebtorAccountNumber);
 
-            // return early if payment is invalid
-            if (!PaymentValidator.ValidatePayment(request, PaymentScheme, debitAccount, creditAccount)) return new MakePaymentResult(false);
+            if (!AccountValidator.ValidateAccount(debitAccount, PaymentScheme)) return new MakePaymentResult(false);
+            if (!PaymentValidator.ValidatePayment(request, PaymentScheme)) return new MakePaymentResult(false);
 
             // move this out to the derived classes later
             debitAccount.DebitAccount(request.Amount);

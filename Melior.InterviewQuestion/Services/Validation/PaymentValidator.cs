@@ -1,38 +1,28 @@
-﻿using Melior.InterviewQuestion.Types;
-using System;
+﻿using Melior.InterviewQuestion.Services.Validation.PaymentRules;
+using Melior.InterviewQuestion.Types;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Melior.InterviewQuestion.Services.Validation
 {
     internal class PaymentValidator : IPaymentValidator
     {
-        private double PaymentWindowDays { get; }
-        public bool ValidatePayment(MakePaymentRequest request, AllowedPaymentSchemes paymentScheme, IAccount debitAccount, IAccount creditAccount)
+        private readonly List<IPaymentValidationRule> _paymentRules;
+        private readonly List<IPaymentSchemeValidationRule> _paymentSchemeValidationRules;
+
+        public PaymentValidator(List<IPaymentValidationRule> paymentRules, List<IPaymentSchemeValidationRule> paymentSchemeValidationRules)
         {
-            if (!paymentScheme.HasFlag(request.PaymentScheme)) return false;
-            if(request.Amount <= 0) return false;
-            if (string.IsNullOrWhiteSpace(request.DebtorAccountNumber)) return false;
-            if (string.IsNullOrWhiteSpace(request.CreditorAccountNumber)) return false;
-            if (request.CreditorAccountNumber == request.DebtorAccountNumber) return false;
-            if (request.PaymentDate < DateTime.UtcNow.AddDays(-PaymentWindowDays)
-                || request.PaymentDate > DateTime.UtcNow.AddDays(PaymentWindowDays))
-            {
-                return false;
-            }
+            _paymentRules = paymentRules;
+            _paymentSchemeValidationRules = paymentSchemeValidationRules;
+        }
 
-            if (!debitAccount.VerifyAccount(request.PaymentScheme))
-            {
-                return false;
-            }
-            if (!creditAccount.VerifyAccount(request.PaymentScheme))
-            {
-                return false;
-            }
+        public bool ValidatePayment(MakePaymentRequest request, AllowedPaymentSchemes paymentScheme)
+        {
+            var paymentRulesPassed = _paymentRules.All(rule => rule.IsValid(request));
+            var paymentSchemeRulesPassed = _paymentSchemeValidationRules.All(rule => rule.IsValid(request, paymentScheme));
 
-            return true;
+            return paymentRulesPassed && paymentSchemeRulesPassed;
+
         }
     }
 }

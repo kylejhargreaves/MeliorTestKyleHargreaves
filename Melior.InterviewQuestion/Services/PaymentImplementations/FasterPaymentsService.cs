@@ -1,19 +1,14 @@
 ﻿using Melior.InterviewQuestion.Data;
 using Melior.InterviewQuestion.Services.Validation;
 using Melior.InterviewQuestion.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Melior.InterviewQuestion.Services.PaymentImplementations
 {
     internal class FasterPaymentsService : PaymentService
     {
         public override AllowedPaymentSchemes PaymentScheme => AllowedPaymentSchemes.FasterPayments;
-        public FasterPaymentsService(IAccountStoreFactory accountStoreFactory, IPaymentValidator paymentValidator)
-        : base(accountStoreFactory, paymentValidator)
+        public FasterPaymentsService(IAccountStoreFactory accountStoreFactory, IPaymentValidator paymentValidator, IAccountValidator accountValidator)
+        : base(accountStoreFactory, paymentValidator, accountValidator)
         {
         }
     }

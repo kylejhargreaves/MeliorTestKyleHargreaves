@@ -10,6 +10,5 @@ namespace Melior.InterviewQuestion.Types
     {
         public bool DebitAccount(Decimal amount);
         public bool CreditAccount(Decimal amount);
-        public bool VerifyAccount(PaymentScheme paymentScheme);
     }
 }

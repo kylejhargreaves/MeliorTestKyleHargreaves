@@ -46,31 +46,6 @@ namespace Melior.InterviewQuestion.Types
             Balance -= amount;
             return true;
         }
-
-        /// <summary>
-        /// Check the account is not disabled and has schemes enabled and if it matches the passed payment scheme
-        /// </summary>
-        /// <param name="paymentScheme"></param>
-        /// <returns>An active account with a matching payment scheme</returns>
-        public bool VerifyAccount(PaymentScheme paymentScheme)
-        {
-            if (Status == AccountStatus.Disabled)
-            {
-                return false; // The account should not be disabled
-            }
-
-            if (AllowedPaymentSchemes == 0)
-            {
-                return false; // No schemes have been allowed
-            }
-          
-            if (!AllowedPaymentSchemes.HasFlag(paymentScheme))
-            {
-                return false; // The requested payment scheme isn't available
-            }
-
-            return true;
-        }
     }
 }
 
